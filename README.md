@@ -8,6 +8,9 @@ This is done using the help of `docker-compose`. A `docker-compose.yml` file is 
 
 We also utilise other properties like `environment` to setup expected environment variables, `ports` to indicate to the network the host:container port mapping and `depends_on` to ensure that each service that depends on another service is built only after all the services it depends on are setup and running.
 
+### Container Images
+![Container Images](./screenshots//container-images.png)
+
 ### Multi-container network running in Docker Desktop
 ![Multi-container network running in Docker Desktop](./screenshots//docker-multi-containers.png)
 
