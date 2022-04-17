@@ -25,7 +25,7 @@ To deploy the services in individual containers, the following commands are used
 	```
 - To build the docker images (run from root of each multi-docker-containers repo, you need to have docker/docker desktop installed)
 	```bash
-	./create-docker-images
+	./create-docker-images.sh
 	```
 - To create the docker containers and run them using docker-compose (you need to have docker/docker desktop installed)
 	```bash
