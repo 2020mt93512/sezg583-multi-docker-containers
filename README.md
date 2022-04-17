@@ -1,10 +1,18 @@
 # SEZG583 Scalable Services Assignment 1
 
-## Running multiple microservices each in a individual docker containers
+## Running multiple microservices each in individual docker containers
 
-This project contains scripts that are used to build the artifacts for the 3 microservices developed as part of Assignment 1 and create a single docker image for each of the microservice. These images will then be run in the separate containers.
+This project contains scripts that are used to build the artifacts for the 3 microservices developed as part of Assignment 1 and create a single docker image for each microservice. These images will then be run in the separate containers.
 
-This is done using the help of `docker-compose`. A `docker-compose.yml` is written to help create the multi-container setup by declaring each image to be run in a separate container as a `service`, and exposing the required services to each other using the hostname property. We also utilise other properties like `environment`, `expose` etc. to achieve the required results.
+This is done using the help of `docker-compose`. A `docker-compose.yml` file is written to help create the multi-container setup by declaring each image to be run in a separate container as a `service`, and exposing the required services to each other using the `hostname` property. This `hostname` is essential for other containers within the docker-compose network to locate each other.
+
+We also utilise other properties like `environment` to setup expected environment variables, `ports` to indicate to the network the host:container port mapping and `depends_on` to ensure that each service that depends on another service is built only after all the services it depends on are setup and running.
+
+### Multi-container network running in Docker Desktop
+![Multi-container network running in Docker Desktop](./screenshots//docker-multi-containers.png)
+
+### Container Logs
+![Container Logs](./screenshots//container-logs.png)
 
 To deploy the services in individual containers, the following commands are used:
 - To build the artifacts (you need to have Java 8)
