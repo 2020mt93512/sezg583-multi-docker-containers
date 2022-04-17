@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  societymgmt-api:
+    hostname: societymgmt-api
+    container_name: societymgmt-api
+    image: sezg583-assignment-societymgmt
+    ports:
+      - "9091:9091"
+
+  parkingmgmt-api:
+    hostname: parkingmgmt-api
+    container_name: parkingmgmt-api
+    image: sezg583-assignment-parkingmgmt
+    environment:
+      - SOCIETY_SERVICE_HOSTNAME=societymgmt-api
+    ports:
+      - "9090:9090"
+    depends_on:
+      - societymgmt-api
+
+  maintenancemgmt-api:
+    hostname: maintenancemgmt-api
+    container_name: maintenancemgmt-api
+    image: sezg583-assignment-maintenancemgmt
+    environment:
+      - SOCIETY_SERVICE_HOSTNAME=societymgmt-api
+    ports:
+      - "9092:9092"
+    depends_on:
+      - societymgmt-api
