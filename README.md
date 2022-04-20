@@ -111,3 +111,25 @@ The rest of the commands assume you have minikube installed, and docker engine i
 	kubectl port-forward service/maintenancemgmt-api-service 9092:9092
 	kubectl port-forward service/parkingmgmt-api-service 9093:9093
 	```
+
+Below are few other helper minikube and kubectl commands used:
+- To open the minikube dashboard:
+  ```bash
+	minikube dashboard
+	```
+- To view the logs from a resource:
+  ```bash
+	kubectl logs <resource_name>
+	```
+- To delete the deployment:
+  ```bash
+	kubectl delete deployment <deployment_name>
+	```
+- To delete the service:
+  ```bash
+	kubectl delete service <service_name>
+	```
+- To delete the pod (note that here, based on the deployment restart strategy a new pod may start up immediately):
+  ```bash
+	kubectl delete pod <pod_name>
+	```
