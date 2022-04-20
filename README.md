@@ -61,3 +61,53 @@ Below are few other helper docker commands used:
 	```bash
 	docker rm <container_id>
 	```
+
+## Minikube deployment
+To deploy the services in individual pods, the following commands are used:
+- To build the artifacts (you need to have Java 8)
+	```bash
+	./clone-repo-step.sh
+	./build-jars-step.sh
+	```
+The rest of the commands assume you have minikube installed, and docker engine is running:
+- Start the minikube cluster and check if the cluster is up
+  ```bash
+	minikube start
+	kubectl cluster-info
+	```
+	![Minikube start cluster info](./screenshots//minikube-start-cluster-info.png)
+- Since our images are not uploaded to any online registry, we have inform minikube to use only the local images. For this, we need to build the images from local within minikube. To do this, run the following commands:
+	```bash
+	eval $(minikube docker-env)
+	./create-docker-images.sh
+	```
+	![Create docker images within minikube](./screenshots//create-docker-images-inside-minikube-container.png)
+- Verify the images are available in docker inside minikube
+	```bash
+	minikube ssh
+	docker image ls
+	exit
+	```
+	![Verify docker images within minikube](./screenshots//verify-local-docker-images-in-minikube.png)
+- To create the required resources in kubernetes, we use the deployment and service description files within each microservice code repository. To apply these configuration files to create the resources, we can use the apply command (run from root of the project):
+  ```bash
+	# kubectl apply -f <file_name>
+	kubectl apply -f mainteancemgmtapi/maintenancemgmt-api.yaml
+	kubectl apply -f parkingmgmtapi/parkingmgmt-api.yaml
+	kubectl apply -f societymgmtapi/societymgmt-api.yaml
+	```
+	![Apply deployment files](./screenshots//apply-deployment-service-files.png)
+- Verify that the configured deployments, services and pods are up and running:
+  ```bash
+	kubectl get deployments
+	kubectl get services
+	kubectl get pods
+	```
+	![Verify deployments, services, pods](./screenshots//verify-deployment-services-pods.png)
+- The deployment is now complete. To test locally, port-forward the required ports to the minikube cluster. At this point, you can make API calls to the REST endpoint as usual.
+  ```bash
+	# kubectl port-forward <resource_name> <local_port>:<exposed_pod_port>
+	kubectl port-forward service/societymgmt-api-service 9091:9091
+	kubectl port-forward service/maintenancemgmt-api-service 9092:9092
+	kubectl port-forward service/parkingmgmt-api-service 9093:9093
+	```
